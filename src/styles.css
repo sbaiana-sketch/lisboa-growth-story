@@ -52,6 +52,16 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+  --color-lime: var(--lime);
+  --color-lime-foreground: var(--lime-foreground);
+  --color-surface: var(--surface);
+  --color-placeholder: var(--placeholder);
+  --color-placeholder-foreground: var(--placeholder-foreground);
+  --font-display: "Space Grotesk", "Poppins", sans-serif;
+  --font-sans: "DM Sans", "Poppins", sans-serif;
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -62,26 +72,34 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 1rem;
+  --brand: oklch(0.47 0.2 285);
+  --brand-dark: oklch(0.41 0.18 284);
+  --brand-light: oklch(0.56 0.18 287);
+  --lime: oklch(0.86 0.16 132);
+  --lime-foreground: oklch(0.25 0.01 285);
+  --surface: oklch(0.976 0.003 286);
+  --placeholder: oklch(0.93 0.01 286 / 0.6);
+  --placeholder-foreground: oklch(0.55 0.015 290);
   --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.25 0.01 285);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.25 0.01 285);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.25 0.01 285);
+  --primary: oklch(0.47 0.2 285);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.976 0.003 286);
+  --secondary-foreground: oklch(0.25 0.01 285);
+  --muted: oklch(0.976 0.003 286);
+  --muted-foreground: oklch(0.55 0.015 290);
+  --accent: oklch(0.86 0.16 132);
+  --accent-foreground: oklch(0.25 0.01 285);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.008 286);
+  --input: oklch(0.92 0.008 286);
+  --ring: oklch(0.47 0.2 285);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -141,4 +159,30 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body { font-family: var(--font-sans); overflow-x: hidden; }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  :focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; border-radius: 6px; }
+}
+
+@utility container-site { width: 100%; max-width: 1220px; margin-inline: auto; padding-inline: 1.25rem; }
+@utility ghost-text {
+  font-family: var(--font-display); font-weight: 700; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px currentColor; opacity: 0.12;
+  white-space: nowrap; pointer-events: none; user-select: none;
+}
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes float-soft { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@utility animate-marquee { animation: marquee 30s linear infinite; }
+@utility animate-float-soft { animation: float-soft 6s ease-in-out infinite; }
+@utility animate-fade-up { animation: fade-up 0.7s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
