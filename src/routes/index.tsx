@@ -1,24 +1,45 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { siteConfig } from "@/config/siteConfig";
+import { About, Experience, Header, Hero, Marquee, Projects, Services } from "@/components/portfolio/SectionsTop";
+import { Blog, Collaboration, Contact, Faq, Footer, Testimonials } from "@/components/portfolio/SectionsBottom";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const title = `${siteConfig.name ? siteConfig.name + " — " : ""}Marketing Digital, Formação e Consultoria`;
+const description = siteConfig.heroSubtitle;
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:rounded-full focus:bg-lime focus:px-4 focus:py-2">Saltar para o conteúdo</a>
+      <Header />
+      <main id="conteudo">
+        <Hero />
+        <Marquee />
+        <Services />
+        <About />
+        <Experience />
+        <Projects />
+        <Collaboration />
+        <Marquee />
+        <Contact />
+        <Testimonials />
+        <Blog />
+        <Faq />
+      </main>
+      <Footer />
+    </>
   );
 }
