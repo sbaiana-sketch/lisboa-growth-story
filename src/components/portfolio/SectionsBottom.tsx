@@ -52,11 +52,11 @@ function ContactForm() {
     const get = (k: string) => String(fd.get(k) ?? "").trim();
     const data = { nome: get("nome"), email: get("email"), assunto: get("assunto"), tipo: get("tipo"), mensagem: get("mensagem") };
     const errs: Record<string, string> = {};
-    if (!data.nome || data.nome.length > 100) errs.nome = "Indica o teu nome (máx. 100 caracteres).";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 255) errs.email = "Indica um e-mail válido.";
-    if (!data.assunto || data.assunto.length > 150) errs.assunto = "Indica o assunto.";
-    if (!TYPES.includes(data.tipo)) errs.tipo = "Escolhe o tipo de pedido.";
-    if (!data.mensagem || data.mensagem.length > 2000) errs.mensagem = "Escreve a mensagem (máx. 2000 caracteres).";
+    if (!data.nome || data.nome.length > 100) errs["nome"] = "Indica o teu nome (máx. 100 caracteres).";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 255) errs["email"] = "Indica um e-mail válido.";
+    if (!data.assunto || data.assunto.length > 150) errs["assunto"] = "Indica o assunto.";
+    if (!TYPES.includes(data.tipo)) errs["tipo"] = "Escolhe o tipo de pedido.";
+    if (!data.mensagem || data.mensagem.length > 2000) errs["mensagem"] = "Escreve a mensagem (máx. 2000 caracteres).";
     setErrors(errs);
     if (Object.keys(errs).length || !ready) return;
     setStatus("loading");
@@ -76,14 +76,14 @@ function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-4 rounded-[1.75rem] bg-brand-dark p-6 md:p-8 sm:grid-cols-2">
-      <div><label htmlFor="nome" className={label}>Nome</label><input id="nome" name="nome" autoComplete="name" maxLength={100} className={field} aria-invalid={!!errors.nome} aria-describedby={errors.nome ? "nome-erro" : undefined} />{err("nome")}</div>
-      <div><label htmlFor="email" className={label}>E-mail</label><input id="email" name="email" type="email" autoComplete="email" maxLength={255} className={field} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-erro" : undefined} />{err("email")}</div>
-      <div><label htmlFor="assunto" className={label}>Assunto</label><input id="assunto" name="assunto" maxLength={150} className={field} aria-invalid={!!errors.assunto} />{err("assunto")}</div>
+      <div><label htmlFor="nome" className={label}>Nome</label><input id="nome" name="nome" autoComplete="name" maxLength={100} className={field} aria-invalid={!!errors["nome"]} aria-describedby={errors["nome"] ? "nome-erro" : undefined} />{err("nome")}</div>
+      <div><label htmlFor="email" className={label}>E-mail</label><input id="email" name="email" type="email" autoComplete="email" maxLength={255} className={field} aria-invalid={!!errors["email"]} aria-describedby={errors["email"] ? "email-erro" : undefined} />{err("email")}</div>
+      <div><label htmlFor="assunto" className={label}>Assunto</label><input id="assunto" name="assunto" maxLength={150} className={field} aria-invalid={!!errors["assunto"]} />{err("assunto")}</div>
       <div><label htmlFor="tipo" className={label}>Tipo de pedido</label>
-        <select id="tipo" name="tipo" defaultValue="" className={cn(field, "[&>option]:text-foreground")} aria-invalid={!!errors.tipo}>
+        <select id="tipo" name="tipo" defaultValue="" className={cn(field, "[&>option]:text-foreground")} aria-invalid={!!errors["tipo"]}>
           <option value="" disabled>Seleccionar…</option>{TYPES.map((t) => <option key={t}>{t}</option>)}
         </select>{err("tipo")}</div>
-      <div className="sm:col-span-2"><label htmlFor="mensagem" className={label}>Mensagem</label><textarea id="mensagem" name="mensagem" rows={5} maxLength={2000} className={field} aria-invalid={!!errors.mensagem} />{err("mensagem")}</div>
+      <div className="sm:col-span-2"><label htmlFor="mensagem" className={label}>Mensagem</label><textarea id="mensagem" name="mensagem" rows={5} maxLength={2000} className={field} aria-invalid={!!errors["mensagem"]} />{err("mensagem")}</div>
       <div className="flex flex-col gap-3 sm:col-span-2" aria-live="polite">
         <button type="submit" disabled={!ready || status === "loading"} className={cn(pill.lime, "self-start disabled:cursor-not-allowed disabled:opacity-60")}>
           {status === "loading" ? <><Loader2 className="h-4 w-4 animate-spin" aria-hidden /> A enviar…</> : <>Enviar mensagem <ArrowRight className="h-4 w-4" aria-hidden /></>}
