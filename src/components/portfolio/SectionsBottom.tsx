@@ -130,7 +130,7 @@ export function Testimonials() {
   const list = siteConfig.testimonials.filter((t) => t.visible && isFilled(t.text) && isFilled(t.name));
   const [i, setI] = useState(0);
   if (!list.length) return null;
-  const t = list[i % list.length];
+  const t = list[i % list.length]!;
   const go = (d: number) => setI((v) => (v + d + list.length) % list.length);
   return (
     <section id="testemunhos" className="bg-background py-20 md:py-28">
