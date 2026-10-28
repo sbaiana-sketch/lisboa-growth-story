@@ -49,10 +49,11 @@ function ContactForm() {
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    const data = Object.fromEntries(Array.from(fd.entries()).map(([k, v]) => [k, String(v).trim()]));
+    const get = (k: string) => String(fd.get(k) ?? "").trim();
+    const data = { nome: get("nome"), email: get("email"), assunto: get("assunto"), tipo: get("tipo"), mensagem: get("mensagem") };
     const errs: Record<string, string> = {};
     if (!data.nome || data.nome.length > 100) errs.nome = "Indica o teu nome (máx. 100 caracteres).";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email ?? "") || data.email.length > 255) errs.email = "Indica um e-mail válido.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 255) errs.email = "Indica um e-mail válido.";
     if (!data.assunto || data.assunto.length > 150) errs.assunto = "Indica o assunto.";
     if (!TYPES.includes(data.tipo)) errs.tipo = "Escolhe o tipo de pedido.";
     if (!data.mensagem || data.mensagem.length > 2000) errs.mensagem = "Escreve a mensagem (máx. 2000 caracteres).";
