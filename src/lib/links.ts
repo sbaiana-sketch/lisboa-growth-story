@@ -1,6 +1,16 @@
 /** Mostra espaços reservados apenas em modo de edição (pré-visualização local). */
 export const EDIT_MODE = import.meta.env.DEV;
 
+export function normalizeImageUrl(value?: string): string {
+  if (!value || !value.trim()) return "";
+  const v = value.trim();
+  const driveMatch = v.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:.*&)?id=)([a-zA-Z0-9_-]+)/);
+  if (driveMatch) {
+    return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+  }
+  return v;
+}
+
 export function isValidUrl(value?: string): value is string {
   if (!value || !value.trim()) return false;
   try {

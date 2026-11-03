@@ -6,11 +6,8 @@
  *  personalizar textos, imagens, contactos e ligações.
  *
  *  • Campos vazios ("") são ocultados automaticamente no site.
- *  • URLs de imagens devem ser links DIRECTOS para o ficheiro
- *    (terminar em .jpg, .png, .webp, .svg…), públicos e sem login.
- *    Links de partilha (ex.: Google Drive "file/d/.../view",
- *    Dropbox "?dl=0", OneDrive "1drv.ms") abrem uma página
- *    intermédia e NÃO funcionam — obtenha o link directo.
+ *  • URLs de imagens podem ser links directos (.jpg, .png, .webp...)
+ *    ou links de partilha do Google Drive (convertidos automaticamente).
  *  • Exemplo ilustrativo (não usar):
  *    "https://dominio-da-minha-cloud.pt/pasta/fotografia.png"
  * ============================================================
@@ -47,7 +44,7 @@ export interface CollaborationModel { title: string; description: string; points
 // ---------- Imagens (fonte única de verdade) ----------
 export const images: Record<ImageKey, string> = {
   logo: "",
-  hero: "",
+  hero: "https://lh3.googleusercontent.com/d/1z1m-8Se2e-qBsINBOnm7y5rdeUYcx_FL",
   signature: "",
   project01: "",
   project02: "",

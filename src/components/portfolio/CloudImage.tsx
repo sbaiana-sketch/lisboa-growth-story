@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ImageOff } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { EDIT_MODE, isValidUrl } from "@/lib/links";
+import { EDIT_MODE, isValidUrl, normalizeImageUrl } from "@/lib/links";
 
 interface Props {
   src?: string;
@@ -14,10 +14,11 @@ interface Props {
   alwaysShowPlaceholder?: boolean;
 }
 
-/** Carrega imagens directamente do URL configurado, sem conversão. */
+/** Carrega imagens directamente do URL configurado, com suporte a links directos ou Google Drive. */
 export function CloudImage({ src, alt, aspectRatio, objectFit = "cover", className, eager, alwaysShowPlaceholder = true }: Props) {
   const [failed, setFailed] = useState(false);
-  const ok = isValidUrl(src) && !failed;
+  const resolvedSrc = normalizeImageUrl(src);
+  const ok = isValidUrl(resolvedSrc) && !failed;
   const style = aspectRatio ? { aspectRatio } : undefined;
 
   if (!ok) {
@@ -38,7 +39,7 @@ export function CloudImage({ src, alt, aspectRatio, objectFit = "cover", classNa
   }
   return (
     <img
-      src={src!.trim()}
+      src={resolvedSrc}
       alt={alt}
       loading={eager ? "eager" : "lazy"}
       decoding="async"

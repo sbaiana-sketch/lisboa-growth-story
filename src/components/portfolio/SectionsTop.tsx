@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, ArrowUpRight, Briefcase, GraduationCap, Menu, Megaphone, MonitorSmartphone, Sparkles, X } from "lucide-react";
 import { siteConfig } from "@/config/siteConfig";
-import { EDIT_MODE, externalProps, isFilled, isValidUrl } from "@/lib/links";
+import { EDIT_MODE, externalProps, isFilled, isValidUrl, normalizeImageUrl } from "@/lib/links";
 import { cn } from "@/lib/utils";
 import { CloudImage } from "./CloudImage";
 import { Eyebrow, Highlight, Logo, SectionTitle, pill, tag } from "./shared";
@@ -70,7 +70,7 @@ export function Header() {
 
 export function Hero() {
   const c = siteConfig;
-  const hasHero = isValidUrl(c.images.hero);
+  const hasHero = isValidUrl(normalizeImageUrl(c.images.hero));
   return (
     <section id="inicio" className="relative overflow-hidden bg-background pt-12 md:pt-16">
       <div className="container-site relative text-center">
@@ -88,13 +88,12 @@ export function Hero() {
 
         <div className="relative mx-auto mt-10 h-[340px] max-w-[520px] sm:h-[440px] md:h-[500px]">
           <div aria-hidden className="absolute bottom-0 left-1/2 h-[78%] w-[86%] -translate-x-1/2 rounded-t-full bg-surface" />
-          <div aria-hidden className="absolute bottom-0 left-1/2 h-[64%] w-[62%] -translate-x-[42%] rotate-[-8deg] rounded-t-[999px] rounded-b-3xl bg-primary" />
           <span aria-hidden className="animate-float-soft absolute top-10 left-2 hidden h-14 w-14 rounded-full border-2 border-dashed border-primary/30 sm:block" />
           <span aria-hidden className="animate-float-soft absolute top-24 right-4 h-5 w-5 rounded-full bg-lime" />
           <span aria-hidden className="absolute bottom-24 left-0 hidden text-3xl text-lime sm:block">✦</span>
           {(hasHero || EDIT_MODE) && (
             <div className="absolute inset-x-0 bottom-0 mx-auto h-full w-[80%]">
-              <CloudImage src={c.images.hero} alt={c.name ? `Fotografia de ${c.name}` : "Fotografia profissional"} objectFit="contain" eager className="h-full w-full rounded-t-full object-bottom" />
+              <CloudImage src={c.images.hero} alt={c.name ? `Fotografia de ${c.name}` : "Fotografia profissional"} objectFit="contain" eager className="h-full w-full object-bottom" />
             </div>
           )}
           <div className="absolute inset-x-0 bottom-6 z-10 flex flex-wrap justify-center gap-3 px-4">
