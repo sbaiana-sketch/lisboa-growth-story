@@ -1,10 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { siteConfig } from "@/config/siteConfig";
-import { About, Experience, Header, Hero, Marquee, Projects, Services } from "@/components/portfolio/SectionsTop";
-import { Blog, Collaboration, Contact, Faq, Footer, Testimonials } from "@/components/portfolio/SectionsBottom";
+import {
+  About,
+  Competencias,
+  Experience,
+  Header,
+  Hero,
+  Marquee,
+  Projects,
+} from "@/components/portfolio/SectionsTop";
+import {
+  Collaboration,
+  Contact,
+  Faq,
+  Footer,
+  Testimonials,
+} from "@/components/portfolio/SectionsBottom";
 
-const title = `${siteConfig.name ? siteConfig.name + " — " : ""}Marketing Digital, Formação e Consultoria`;
-const description = siteConfig.heroSubtitle;
+const title = "Sandra Baiana | Marketing Digital, Comunicação e Estratégia";
+const description =
+  "Conheça o percurso profissional de Sandra Baiana, formadora e profissional de Marketing Digital, com experiência em estratégia, desenvolvimento web, SEO e comunicação digital.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -15,6 +29,8 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
     ],
   }),
   component: Index,
@@ -23,20 +39,24 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:rounded-full focus:bg-lime focus:px-4 focus:py-2">Saltar para o conteúdo</a>
+      <a
+        href="#conteudo"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[60] focus:rounded-full focus:bg-lime focus:px-4 focus:py-2 text-lime-foreground font-semibold"
+      >
+        Saltar para o conteúdo
+      </a>
       <Header />
       <main id="conteudo">
         <Hero />
         <Marquee />
-        <Services />
         <About />
+        <Competencias />
         <Experience />
         <Projects />
         <Collaboration />
         <Marquee />
         <Contact />
         <Testimonials />
-        <Blog />
         <Faq />
       </main>
       <Footer />

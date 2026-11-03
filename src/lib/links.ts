@@ -4,7 +4,9 @@ export const EDIT_MODE = import.meta.env.DEV;
 export function normalizeImageUrl(value?: string): string {
   if (!value || !value.trim()) return "";
   const v = value.trim();
-  const driveMatch = v.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:.*&)?id=)([a-zA-Z0-9_-]+)/);
+  const driveMatch = v.match(
+    /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:.*&)?id=)([a-zA-Z0-9_-]+)/,
+  );
   if (driveMatch) {
     return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
   }
@@ -24,7 +26,9 @@ export function isValidUrl(value?: string): value is string {
 export const isFilled = (v?: string) => !!v && v.trim().length > 0;
 
 export function mailto(email?: string) {
-  return isFilled(email) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email!.trim()) ? `mailto:${email!.trim()}` : null;
+  return isFilled(email) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email!.trim())
+    ? `mailto:${email!.trim()}`
+    : null;
 }
 export function tel(phone?: string) {
   const d = (phone ?? "").replace(/[^\d+]/g, "");
